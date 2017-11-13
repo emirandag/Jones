@@ -16,16 +16,24 @@ public class Account {
     private String iban;
     private long saldo;
     private Cliente cliente;
+    private String dni;
 
     public Account() {
     }
 
-    public Account(String iban, long saldo, Cliente cliente) {
+    public Account(String iban, long saldo, Cliente cliente, String dni) {
         this.iban = iban;
         this.saldo = saldo;
         this.cliente = cliente;
+        this.dni = dni;
     }
-
+    
+    public Account(String iban, long saldo, String dni) {
+        this.iban = iban;
+        this.saldo = saldo;
+        this.dni = dni;
+    }
+    
     public String getIban() {
         return iban;
     }
@@ -50,12 +58,21 @@ public class Account {
         this.cliente = cliente;
     }
 
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.iban);
-        hash = 97 * hash + (int) (this.saldo ^ (this.saldo >>> 32));
-        hash = 97 * hash + Objects.hashCode(this.cliente);
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.iban);
+        hash = 47 * hash + (int) (this.saldo ^ (this.saldo >>> 32));
+        hash = 47 * hash + Objects.hashCode(this.cliente);
+        hash = 47 * hash + Objects.hashCode(this.dni);
         return hash;
     }
 
@@ -77,6 +94,9 @@ public class Account {
         if (!Objects.equals(this.iban, other.iban)) {
             return false;
         }
+        if (!Objects.equals(this.dni, other.dni)) {
+            return false;
+        }
         if (!Objects.equals(this.cliente, other.cliente)) {
             return false;
         }
@@ -85,8 +105,12 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "iban=" + iban + ", saldo=" + saldo + ", cliente=" + cliente + '}';
+        return "Account{" + "iban=" + iban + ", saldo=" + saldo + ", cliente=" + cliente + ", dni=" + dni + '}';
     }
+
+    
+
+    
     
     
 }
