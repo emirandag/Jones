@@ -110,6 +110,9 @@
 				<input type="submit" value="Actualizar"></input>
 			</div>
 
+                        <div class="6u 12u(3)">
+                            <a href="ListAccountServlet" class="button">Cuentas</a>
+			</div>
 
 		</form>
 	</div>

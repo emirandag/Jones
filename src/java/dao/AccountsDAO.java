@@ -166,7 +166,65 @@ public class AccountsDAO {
 
     public boolean deleteAccount(Account account) {
         
-        return false;
+        boolean cuentaBorrada = false;
+        
+        con = ConnectionManager.getConnection();
+
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        
+        try {
+            Properties prop = new Properties();
+
+            InputStream is = AccountsDAO.class.getClassLoader().getResourceAsStream("sql.properties");
+            prop.load(is);
+            
+            stat = con.prepareStatement(prop.getProperty("deleteAccount"));
+
+            stat.setString(1, CLIENTE);
+
+            
+            rs = stat.executeQuery();
+            
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(AccountsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            //account = insertAccount(account);
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        
+        
+        
+        return cuentaBorrada;
     }
 
 }
