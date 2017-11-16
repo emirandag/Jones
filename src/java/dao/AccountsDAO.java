@@ -28,11 +28,10 @@ public class AccountsDAO {
 
     static Connection con = null;
     static Logger log = (Logger) LogManager.getLogger(AccountsDAO.class);
-    
+
     public static final String IBAN = "iban";
     public static final String SALDO = "saldo";
     public static final String CLIENTE = "cliente";
-    
 
     public static List<Account> getAccounts(String dni) {
         List<Account> accounts = new ArrayList<>();
@@ -71,7 +70,6 @@ public class AccountsDAO {
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(AccountsDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            accounts = getAccounts(dni);
             if (rs != null) {
                 try {
                     rs.close();
@@ -165,27 +163,26 @@ public class AccountsDAO {
     }
 
     public boolean deleteAccount(Account account) {
-        
+
         boolean cuentaBorrada = false;
-        
+
         con = ConnectionManager.getConnection();
 
         PreparedStatement stat = null;
         ResultSet rs = null;
-        
+
         try {
             Properties prop = new Properties();
 
             InputStream is = AccountsDAO.class.getClassLoader().getResourceAsStream("sql.properties");
             prop.load(is);
-            
+
             stat = con.prepareStatement(prop.getProperty("deleteAccount"));
 
             stat.setString(1, CLIENTE);
 
-            
             rs = stat.executeQuery();
-            
+
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
@@ -221,9 +218,7 @@ public class AccountsDAO {
             }
 
         }
-        
-        
-        
+
         return cuentaBorrada;
     }
 

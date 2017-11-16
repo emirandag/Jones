@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author iaw26540084
  */
-@WebServlet(name = "ListAccountServlet", urlPatterns = {"/ListAccountServlet/*"})
+@WebServlet(urlPatterns = {"/ListAccountServlet/*"})
 public class ListAccountServlet extends HttpServlet {
 
     /**
@@ -42,8 +42,7 @@ public class ListAccountServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        PrintWriter out = resp.getWriter();
-        String dni = req.getRequestURI().split("ListAccounts/")[1];
+        String dni = req.getRequestURI().split("ListAccountServlet/")[1];
 
         List<Account> account = AccountsDAO.getAccounts(dni);
 
@@ -52,11 +51,9 @@ public class ListAccountServlet extends HttpServlet {
         session.setAttribute("listaCuentas", account);
         req.setAttribute("listaCuentas", account);
         String jsp = "listaCuentas.jsp";
+//        req.getRequestDispatcher(jsp).forward(req, resp);
         resp.sendRedirect(jsp);
 
-//        for (Account account1 : account) {
-//            
-//        }
     }
 
 }
