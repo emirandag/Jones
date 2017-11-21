@@ -116,9 +116,9 @@ public class AccountsDAO {
             if (con != null) {
                 stat = con.prepareStatement(prop.getProperty("accountInsert"));
 
-                stat.setString(1, IBAN);
-                stat.setString(2, SALDO);
-                stat.setString(3, CLIENTE);
+                stat.setString(1, account.getIban());
+                stat.setLong(2, account.getSaldo());
+                stat.setString(3, account.getDni());
 
                 stat.executeUpdate();
                 cuentaInsertada = true;
@@ -162,14 +162,13 @@ public class AccountsDAO {
         return cuentaInsertada;
     }
 
-    public boolean deleteAccount(Account account) {
+   public static boolean deleteAccount(Account account) {
 
         boolean cuentaBorrada = false;
 
         con = ConnectionManager.getConnection();
 
         PreparedStatement stat = null;
-        ResultSet rs = null;
 
         try {
             Properties prop = new Properties();
@@ -179,26 +178,17 @@ public class AccountsDAO {
 
             stat = con.prepareStatement(prop.getProperty("deleteAccount"));
 
-            stat.setString(1, CLIENTE);
+            stat.setString(1, account.getIban());
 
-            rs = stat.executeQuery();
-
+            stat.executeUpdate();
+            cuentaBorrada = true;
+            
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(AccountsDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            //account = insertAccount(account);
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    e.printStackTrace();
-                }
-            }
-
             if (stat != null) {
                 try {
                     stat.close();
