@@ -1,3 +1,4 @@
+<%@page import="beans.Transaccion"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -89,6 +90,9 @@
 		</form>
 	</div>
 	</section>
+                                                <%=for(Transaccion t : has.get("envios")){
+                                                    
+                                                }%>
 
 
 </body>
