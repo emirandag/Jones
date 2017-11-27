@@ -29,7 +29,6 @@ public class ServletListAccount extends HttpServlet {
             throws ServletException, IOException {
         String dni = req.getParameter("dni");
         List<Account> account = AccountsDAO.getAccounts(dni);
-        System.out.println(account.size()+"**********************************");
 
         HttpSession session = req.getSession();
         session.setMaxInactiveInterval(60);

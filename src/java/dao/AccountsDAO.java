@@ -101,6 +101,65 @@ public class AccountsDAO {
         return accounts;
     }
 
+    public static Account getAccount(String iban) {
+        con = ConnectionManager.getConnection();
+
+        PreparedStatement stat = null;
+        Account account = null;
+
+        ResultSet rs = null;
+
+        try {
+            Properties prop = new Properties();
+
+            InputStream is = AccountsDAO.class.getClassLoader().getResourceAsStream("sql.properties");
+            prop.load(is);
+
+            stat = con.prepareStatement(prop.getProperty("getAccountDetails"));
+
+            stat.setString(1, iban);
+
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                account = new Account(rs.getString("iban"), rs.getLong("saldo"),
+                        rs.getString("cliente"));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(AccountsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+        }
+        return account;
+    }
+
     public boolean insertAccount(Account account) {
         boolean cuentaInsertada = false;
         con = ConnectionManager.getConnection();
@@ -162,7 +221,7 @@ public class AccountsDAO {
         return cuentaInsertada;
     }
 
-   public static boolean deleteAccount(Account account) {
+    public static boolean deleteAccount(Account account) {
 
         boolean cuentaBorrada = false;
 
@@ -182,7 +241,7 @@ public class AccountsDAO {
 
             stat.executeUpdate();
             cuentaBorrada = true;
-            
+
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

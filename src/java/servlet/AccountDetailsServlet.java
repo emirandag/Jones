@@ -5,30 +5,41 @@
  */
 package servlet;
 
+import beans.Account;
+import dao.AccountsDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author iaw26540084
  */
-@WebServlet(name = "AccountDetailsServlet", urlPatterns = {"/AccountDetailsServlet"})
+@WebServlet("/AccountDetailsServlet")
 public class AccountDetailsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp); //To change body of generated methods, choose Tools | Templates.
+        String dni = req.getParameter("dni");
+        String iban = req.getParameter("iban");
+
+        Account account = AccountsDAO.getAccount(iban);
+        HttpSession session = req.getSession();
+        session.setMaxInactiveInterval(60);
+        session.setAttribute("cuenta", account);
+        req.setAttribute("cuenta", account);
+        req.getRequestDispatcher("detalleCuenta.jsp").forward(req, resp);
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp); //To change body of generated methods, choose Tools | Templates.
+        doGet(req, resp);
     }
 
-    
 }

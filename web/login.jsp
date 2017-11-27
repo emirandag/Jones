@@ -90,10 +90,7 @@
 		</form>
 	</div>
 	</section>
-                                                <%=for(Transaccion t : has.get("envios")){
-                                                    
-                                                }%>
-
+                                                
 
 </body>
 </html>

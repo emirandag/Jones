@@ -62,10 +62,19 @@
                             <input type="submit" value="Eliminar" name="accion">
                         </form>
                     </td>
+                    <td width="5%">
+                        <form method="POST" action="AccountDetailsServlet">
+                            <input type="hidden" name="iban" value="<%=cuentaObj.getIban()%>">
+                            <input type="hidden" name="dni" value="<%=dni%>">
+                            <input type="submit" value="Detalles" name="accion">
+                        </form>
+                    </td>
                 </tr>
             </table>
             <%}%>
             <h2>Tiene <%=accounts.size()%> cuentas</h2>
+            
+            
 
 
     </body>
