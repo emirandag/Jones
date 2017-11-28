@@ -6,7 +6,9 @@
 package servlet;
 
 import beans.Account;
+import beans.Transaccion;
 import dao.AccountsDAO;
+import dao.TransaccionesDAO;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -33,6 +35,10 @@ public class AccountDetailsServlet extends HttpServlet {
         session.setMaxInactiveInterval(60);
         session.setAttribute("cuenta", account);
         req.setAttribute("cuenta", account);
+
+        Object tmp = TransaccionesDAO.listaTransacciones(iban);
+        session.setAttribute("listaTransacciones", tmp);
+        req.setAttribute("listaTransacciones", tmp);
         req.getRequestDispatcher("detalleCuenta.jsp").forward(req, resp);
 
     }

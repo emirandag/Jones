@@ -35,7 +35,7 @@ public class TransaccionesDAO {
     public static final String DESTINO = "destino";
     
     public static final String ENVIOS = "envios";
-    public static final String RECIBIDO = "recibido";
+    public static final String RECIBIDOS = "recibidos";
 
     static Connection con = null;
     static Logger log = (Logger) LogManager.getLogger(AccountsDAO.class);
@@ -86,7 +86,7 @@ public class TransaccionesDAO {
         return transaccionRealizada;
     }
 
-    public HashMap<String, List<Transaccion>> listaTransacciones(String iban) {
+    public static HashMap<String, List<Transaccion>> listaTransacciones(String iban) {
         HashMap<String, List<Transaccion>> transacciones = new HashMap<>();
         ArrayList<Transaccion> envios = new ArrayList<>();
         ArrayList<Transaccion> recibidos = new ArrayList<>();
@@ -110,6 +110,7 @@ public class TransaccionesDAO {
             }
 
             stat = con.prepareStatement(prop.getProperty("reciboTransaccion"));
+            stat.setString(1, iban);
 
             rs = stat.executeQuery();
             //reciboTransaccion
@@ -118,7 +119,7 @@ public class TransaccionesDAO {
             }
 
             transacciones.put(ENVIOS, envios);
-            transacciones.put(RECIBIDO, envios);
+            transacciones.put(RECIBIDOS, recibidos);
 
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -155,7 +156,7 @@ public class TransaccionesDAO {
 
         }
 
-        return null;
+        return transacciones;
     }
 
 }
