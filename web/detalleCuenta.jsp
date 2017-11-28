@@ -55,7 +55,7 @@
 
         <p>IBAN: <%=account.getIban()%> </p>
         <p>SALDO: <%=account.getSaldo()%> €</p>
-        <table>
+        <table width="100%" border="2">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -80,7 +80,7 @@
 
 
 
-        <table>
+        <table width="100%" border="2">
             <thead>
                 <tr>
                     <th>ID</th>
