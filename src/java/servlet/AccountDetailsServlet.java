@@ -27,7 +27,6 @@ public class AccountDetailsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String dni = req.getParameter("dni");
         String iban = req.getParameter("iban");
 
         Account account = AccountsDAO.getAccount(iban);
@@ -45,6 +44,10 @@ public class AccountDetailsServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String origen = req.getParameter("iban");
+        String destino = req.getParameter("destino");
+        String pasta = req.getParameter("pasta");
+        TransaccionesDAO.realizaTransaccion(origen, destino, Long.parseLong(pasta));
         doGet(req, resp);
     }
 

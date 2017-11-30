@@ -40,7 +40,7 @@ public class TransaccionesDAO {
     static Connection con = null;
     static Logger log = (Logger) LogManager.getLogger(AccountsDAO.class);
 
-    public boolean realizaTransaccion(String origen, String destino, long cantidad) {
+    public static boolean realizaTransaccion(String origen, String destino, long cantidad) {
 
         boolean transaccionRealizada = false;
 
@@ -53,9 +53,8 @@ public class TransaccionesDAO {
 
             InputStream is = TransaccionesDAO.class.getClassLoader().getResourceAsStream("sql.properties");
             prop.load(is);
-
             if (con != null) {
-                stat = con.prepareStatement("makeTransaction");
+                stat = con.prepareStatement(prop.getProperty("makeTransaction"));
                 stat.setLong(1, cantidad);
                 stat.setString(2, origen);
                 stat.setString(3, destino);
@@ -63,6 +62,7 @@ public class TransaccionesDAO {
                 transaccionRealizada = true;
             }
         } catch (Exception e) {
+            System.err.println(e);
         } finally {
             if (stat != null) {
                 try {

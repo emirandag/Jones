@@ -116,7 +116,10 @@
 
 
 
-        <form method="POST" action="ServletListAccount">
+        <form method="POST" action="AccountDetailsServlet">
+            <input type="hidden" name="iban" value="<%=account.getIban()%>"/>
+            <input type="number" name="pasta" />€
+            <input type="text" name="destino"/>
             <input type="submit" value="Realizar transaccion" name="accion">
         </form>
 

@@ -63,7 +63,7 @@
                         </form>
                     </td>
                     <td width="5%">
-                        <form method="POST" action="AccountDetailsServlet">
+                        <form method="GET" action="AccountDetailsServlet">
                             <input type="hidden" name="iban" value="<%=cuentaObj.getIban()%>">
                             <input type="hidden" name="dni" value="<%=dni%>">
                             <input type="submit" value="Detalles" name="accion">
