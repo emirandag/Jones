@@ -57,6 +57,7 @@
                 <p>SALDO: <%=cuentaObj.getSaldo()%> €</p>-->
                     <td width="5%">
                         <form method="POST" action="ServletListAccount">
+                            <input type="hidden" name="action" value="2"/>
                             <input type="hidden" name="iban" value="<%=cuentaObj.getIban()%>">
                             <input type="hidden" name="dni" value="<%=dni%>">
                             <input type="submit" value="Eliminar" name="accion">
@@ -71,10 +72,18 @@
                     </td>
                 </tr>
             </table>
+
             <%}%>
+            <form method="POST" action="ServletListAccount">
+                <input type="hidden" name="action" value="1"/>
+                <input type="hidden" name="dni" value="<%=dni%>">
+                SALDO: <input type="number" name="saldo"/>
+                <input type="submit" value="Crear nueva cuenta" name="accion">
+            </form>
+
             <h2>Tiene <%=accounts.size()%> cuentas</h2>
-            
-            
+
+
 
 
     </body>

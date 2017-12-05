@@ -160,7 +160,7 @@ public class AccountsDAO {
         return account;
     }
 
-    public boolean insertAccount(Account account) {
+    public static boolean insertAccount(Account account) {
         boolean cuentaInsertada = false;
         con = ConnectionManager.getConnection();
 
@@ -189,7 +189,7 @@ public class AccountsDAO {
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(AccountsDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            //account = insertAccount(account);
+
             if (rs != null) {
                 try {
                     rs.close();
@@ -269,6 +269,58 @@ public class AccountsDAO {
         }
 
         return cuentaBorrada;
+    }
+
+    public static String getLastIbanNumber() {
+        con = ConnectionManager.getConnection();
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+
+        try {
+            Properties prop = new Properties();
+
+            InputStream is = AccountsDAO.class.getClassLoader().getResourceAsStream("sql.properties");
+            prop.load(is);
+
+            stat = con.prepareStatement(prop.getProperty("genIban"));
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                return rs.getString(1).substring(2);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(AccountsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "0";
     }
 
 }

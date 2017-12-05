@@ -39,6 +39,8 @@ public class AccountDetailsServlet extends HttpServlet {
         session.setAttribute("listaTransacciones", tmp);
         req.setAttribute("listaTransacciones", tmp);
         req.getRequestDispatcher("detalleCuenta.jsp").forward(req, resp);
+        
+        
 
     }
 
@@ -49,6 +51,10 @@ public class AccountDetailsServlet extends HttpServlet {
         String pasta = req.getParameter("pasta");
         TransaccionesDAO.realizaTransaccion(origen, destino, Long.parseLong(pasta));
         doGet(req, resp);
+        
+        
+               
+       
     }
 
 }

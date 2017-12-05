@@ -8,6 +8,7 @@ package servlet;
 import beans.Account;
 import dao.AccountsDAO;
 import java.io.IOException;
+import java.math.BigInteger;
 
 import java.util.List;
 import javax.servlet.ServletException;
@@ -43,12 +44,29 @@ public class ServletListAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String iban = req.getParameter("iban");
-        if(AccountsDAO.deleteAccount(new Account(iban, 0, null))){
-            doGet(req, resp);
-        }else{
-            
+        String dni = req.getParameter("dni");
+        String action = req.getParameter("action");
+
+        if (action.equalsIgnoreCase("1")) {
+            String saldoString = req.getParameter("saldo");
+            if (!saldoString.isEmpty()) {
+                Long saldo = Long.parseLong(saldoString);
+                //insertar aqui
+                BigInteger numTmp = new BigInteger(AccountsDAO.getLastIbanNumber()).add(new BigInteger("1"));
+                String iban = "ES" + numTmp.toString();
+                System.out.println(iban + "************************************");
+                AccountsDAO.insertAccount(new Account(iban, saldo, dni));
+            }
+
         }
+        if (action.equals("2")) {
+            ///borrar aqui
+            String iban = req.getParameter("iban");
+            AccountsDAO.deleteAccount(new Account(iban, 0, null));
+
+        }
+        doGet(req, resp);
+
     }
 
 }

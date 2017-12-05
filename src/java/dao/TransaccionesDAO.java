@@ -33,7 +33,7 @@ public class TransaccionesDAO {
     public static final String CANTIDAD = "cantidad";
     public static final String ORIGEN = "origen";
     public static final String DESTINO = "destino";
-    
+
     public static final String ENVIOS = "envios";
     public static final String RECIBIDOS = "recibidos";
 
@@ -59,6 +59,17 @@ public class TransaccionesDAO {
                 stat.setString(2, origen);
                 stat.setString(3, destino);
                 stat.executeUpdate();
+                stat = con.prepareStatement(prop.getProperty("actualizarOrigen"));
+                stat.setString(1, origen);
+                stat.setLong(2, cantidad);
+                stat.setString(3, origen);
+                stat.executeUpdate();
+                stat = con.prepareStatement(prop.getProperty("actualizarDestino"));
+                stat.setString(1, destino);
+                stat.setLong(2, cantidad);
+                stat.setString(3, destino);
+                stat.executeUpdate();
+
                 transaccionRealizada = true;
             }
         } catch (Exception e) {
