@@ -1,3 +1,4 @@
+
 <%@page import="beans.Transaccion"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -33,14 +34,10 @@
 <body>
 
 	<!-------------------------------------- Header ----------------------------------------->
-
 	<header id="header" class="skel-layers-fixed">
 	<h1>
 		<a href="index.html"><fmt:message key="bank" /> Jones</a>
-
 	</h1>
-
-
 	<nav id="nav">
 	<ul>
 		<li><a href="index.html">Home</a></li>
@@ -60,10 +57,8 @@
 			</form></li>
 	</ul>
 	</nav> </header>
-
 	<!------------------------ Main ----------------------->
 	<section id="main" class="container 75%"> <header>
-
 	<h2><fmt:message key="init.session" /></h2>
 	</header>
 	<div class="box">
@@ -78,7 +73,6 @@
 						value="" placeholder="<fmt:message key="password" />" /><br>
 				</div>
 			</div>
-
 			<div class="row uniform">
 				<div class="12u">
 					<ul class="actions align-center">
@@ -86,11 +80,9 @@
 					</ul>
 				</div>
 			</div>
-
 		</form>
 	</div>
 	</section>
                                                 
-
 </body>
 </html>
